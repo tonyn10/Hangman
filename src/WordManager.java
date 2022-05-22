@@ -1,3 +1,4 @@
+package src;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class WordManager {
         String chosenWord = "";
 
         // TODO: add more text files with different topics (randomizing selection of them)
-        File file = new File("CountryWords.txt");
+        File file = new File("TextFiles\\CountryWords.txt");
 
         Scanner fileScanner = null;
         try {

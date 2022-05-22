@@ -1,3 +1,4 @@
+package src;
 public class WinCondition {
     private int lives;
     private boolean win;
