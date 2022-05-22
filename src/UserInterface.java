@@ -1,3 +1,4 @@
+package src;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -61,15 +62,13 @@ public class UserInterface {
 
     public void displayLettersIncorrect() {
         HashSet<Character> lettersIncorrect = this.tracker.getGuessTracker().getLettersIncorrect();
-        String s = "";
-        for(char ch : lettersIncorrect) {
-            s = s + ch + " ";
-        }
-
-        // print nothing if there are no incorrect letters yet
-        if(s.length() != 0) {
+        // only display it if have letters guessed
+        if(lettersIncorrect.size() >= 1) {
             System.out.println();
-            System.out.println(s);
+            for(char c : lettersIncorrect) {
+                System.out.print(c + " ");
+            }
+            System.out.println();
         }
     }
 

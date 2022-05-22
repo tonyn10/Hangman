@@ -1,3 +1,4 @@
+package src;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class WordManager {
         String chosenWord = "";
 
         // TODO: add more text files with different topics (randomizing selection of them)
-        File file = new File("CountryWords.txt");
+        File file = new File("TextFiles\\CountryWords.txt");
 
         Scanner fileScanner = null;
         try {
@@ -25,7 +26,7 @@ public class WordManager {
             e.printStackTrace();
         }
 
-        // ArrayList is best for insertion
+        // ArrayList has constant time insertion and access
         ArrayList<String> possibleWords = null;
         if(fileScanner != null) {
             this.topic = fileScanner.nextLine(); // first line of the text file is the topic
@@ -38,8 +39,7 @@ public class WordManager {
             fileScanner.close();
         }
         
-        if(possibleWords != null) {
-            // choosing a random index is inefficient
+        if(possibleWords != null)  {
             int chosenIndex = (int) (Math.random() * possibleWords.size());
             chosenWord = possibleWords.get(chosenIndex);
         }
