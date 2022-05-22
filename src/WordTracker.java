@@ -1,9 +1,10 @@
 package src;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WordTracker {
     private String word;
-    private char[] sortedLetters;
+    private HashMap<Character, ArrayList<Integer>> includedLetters;
     private int lettersCorrect;
     private String currentWord;
     private StringBuilder sb;
@@ -13,17 +14,19 @@ public class WordTracker {
     public WordTracker(String word) {
         this.word = word;
         this.initCurrentWord(word);
-        this.sortedLetters = getSortedLetters(word);
+
+        this.includedLetters = getIncludedLetters(word);
         this.sb = new StringBuilder(currentWord);
         this.guessTracker = new GuessTracker();
         this.lettersCorrect = 0;
     }
 
     private void initCurrentWord(String word) {
-        this.currentWord = "";
+        StringBuilder sb = new StringBuilder();
         for(int i = 0; i < word.length(); i++) {
-            this.currentWord += "_";
+            sb.append("_");
         }
+        this.currentWord = sb.toString();
     }
 
     // returns boolean whether decrease lives or not
@@ -53,13 +56,23 @@ public class WordTracker {
         return c;
     }
 
-    private char[] getSortedLetters(String word) {
-        // TODO: more efficient way is to use LinkedHashMap, mapping letters with their indices
+    private HashMap<Character, ArrayList<Integer>> getIncludedLetters(String word) {
+        HashMap<Character, ArrayList<Integer>> map = new HashMap<Character, ArrayList<Integer>>();
 
-        // word is all lowercase for convenience
-        char[] temp = word.toLowerCase().toCharArray(); 
-        Arrays.sort(temp);
-        return temp;
+        for(int i = 0; i < word.length(); i++) {
+            char c = WordTracker.getLowerCase(word.charAt(i)); // use lower case letters as keys
+            if(!map.containsKey(c)) {
+                // first index, so make new list
+                ArrayList<Integer> listOfIndices = new ArrayList<Integer>();
+                listOfIndices.add(i);
+                map.put(c, listOfIndices);
+            }
+            else {
+                map.get(c).add(i); // add the index to the already existing list
+            }
+        }
+
+        return map;
     }
 
     public boolean areAllLettersCorrect() {
@@ -67,7 +80,7 @@ public class WordTracker {
     }
 
     private boolean isCharIncluded(char c) {
-        if(Arrays.binarySearch(this.sortedLetters, c) >= 0) {
+        if(this.includedLetters.containsKey(c)) {
             return true;
         }
         return false;
@@ -75,13 +88,12 @@ public class WordTracker {
 
     private void fillOut(char c) {
         // fill out current word
-        for(int i = 0; i < this.word.length(); i++) {
-            if(getLowerCase(this.word.charAt(i)) == c) {    // charAt is constant time
-                this.sb.setCharAt(i, this.word.charAt(i));
-                this.lettersCorrect++;
-            }
+        ArrayList<Integer> indices = this.includedLetters.get(c);
+        for(int i : indices) {
+            this.sb.setCharAt(i, this.word.charAt(i));
+            this.lettersCorrect++;
         }
-        this.currentWord = sb.toString();
+        this.currentWord = this.sb.toString();
     }
 
     public int getLettersCorrect() {
