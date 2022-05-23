@@ -70,6 +70,7 @@ public class UserInterface {
         // only display it if have letters guessed
         if(lettersIncorrect.size() >= 1) {
             System.out.println();
+            System.out.print("Incorrect guesses: ");
             for(char c : lettersIncorrect) {
                 System.out.print(c + " ");
             }
@@ -78,6 +79,7 @@ public class UserInterface {
     }
 
     public void displayBoard() {
+        System.out.println("\n\n\n");   // provide line space from previousb board
         this.displayCurrent();
         this.displayLives();
     }
