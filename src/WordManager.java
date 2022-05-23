@@ -22,7 +22,6 @@ public class WordManager {
         try {
             fileScanner = new Scanner(file);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
