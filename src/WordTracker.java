@@ -15,10 +15,13 @@ public class WordTracker {
         this.word = word;
         this.initCurrentWord(word);
 
-        this.includedLetters = getIncludedLetters(word);
         this.sb = new StringBuilder(currentWord);
-        this.guessTracker = new GuessTracker();
+
         this.lettersCorrect = 0;
+
+        this.includedLetters = getIncludedLetters(word);
+        
+        this.guessTracker = new GuessTracker();
     }
 
     private void initCurrentWord(String word) {
@@ -61,14 +64,24 @@ public class WordTracker {
 
         for(int i = 0; i < word.length(); i++) {
             char c = WordTracker.getLowerCase(word.charAt(i)); // use lower case letters as keys
-            if(!map.containsKey(c)) {
-                // first index, so make new list
-                ArrayList<Integer> listOfIndices = new ArrayList<Integer>();
-                listOfIndices.add(i);
-                map.put(c, listOfIndices);
+
+            // only keep track of alphabetical letters
+            if(UserInterface.isLetter(String.valueOf(c))) {
+                if(!map.containsKey(c)) {
+                    // first index, so make new list
+                    ArrayList<Integer> listOfIndices = new ArrayList<Integer>();
+                    listOfIndices.add(i);
+                    map.put(c, listOfIndices);
+                }
+                else {
+                    map.get(c).add(i); // add the index to the already existing list
+                }
             }
             else {
-                map.get(c).add(i); // add the index to the already existing list
+                // give the user non-alphabetical characters
+                this.sb.setCharAt(i, c);
+                this.currentWord = sb.toString();
+                this.lettersCorrect++;
             }
         }
 
