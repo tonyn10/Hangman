@@ -12,17 +12,23 @@ public class WordManager {
         this.word = getWord();
     }
 
+    // returns whether the file was successfully acquired
+    private File getFile() {
+        String[] fileNames = {"TextFiles\\CountryWords.txt", "TextFiles\\LeagueWords.txt", "TextFiles\\StatesWords.txt"};
+        // get random file name
+        File f = new File(fileNames[(int) (Math.random() * fileNames.length)]);
+        return f;
+    }
+
     private String getWord() {
         String chosenWord = "";
 
-        // TODO: add more text files with different topics (randomizing selection of them)
-        File file = new File("TextFiles\\CountryWords.txt");
+        File file = this.getFile();
 
         Scanner fileScanner = null;
         try {
             fileScanner = new Scanner(file);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

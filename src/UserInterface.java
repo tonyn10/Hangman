@@ -10,14 +10,10 @@ public class UserInterface {
     private WinCondition winCondition;
     private Scanner sc;
 
-    private final Pattern PATTERN;
-
     public UserInterface(String word, WinCondition winCondition, WordTracker tracker) {
         this.winCondition = winCondition;
         this.tracker = tracker;
         this.sc = new Scanner(System.in);
-
-        PATTERN = Pattern.compile("[a-z]", Pattern.CASE_INSENSITIVE);
     }
 
     public void askForLetter() {
@@ -26,11 +22,10 @@ public class UserInterface {
         char c = '\u0000';
         try {
             String s = sc.nextLine();
-            Matcher matcher = PATTERN.matcher(s);
             if(s.equalsIgnoreCase("esc")) {
                 this.winCondition.interrupt();
             }
-            else if(s.length() == 1 && matcher.find()) {
+            else if(UserInterface.isLetter(s)) {
                 c = s.charAt(0);
             }
             else {
@@ -44,6 +39,16 @@ public class UserInterface {
         if(c != '\u0000') {
             this.winCondition.receiveInput(c);
         }
+    }
+
+    // returns true if string is a single letter
+    public static boolean isLetter(String s) {
+        if(s.length() == 1) {
+            Pattern p = Pattern.compile("[a-z]", Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(s);
+            return m.find();
+        }
+        return false;
     }
 
     private void displayCurrent() {
