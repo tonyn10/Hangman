@@ -19,18 +19,14 @@ public class Hanger {
 
     private void initTop() {
         // horizontal dimension is 6 characters across
-        top = new String[3][3];
+        top = new String[2][3];
         top[0][0] = " __";  // tiny space at very left
         top[0][1] = "___";
         top[0][2] = "";
 
         top[1][0] = "|";
-        top[1][1] = "     ";
+        top[1][1] = "     ";    // five spaces
         top[1][2] = "|";
-
-        top[2][0] = "|";
-        top[2][1] = "     ";    // five spaces
-        top[2][2] = "|";
     }
 
     private void initHangerParts() {
@@ -52,12 +48,12 @@ public class Hanger {
 
         hangerParts[1][0] = new HangerPart(true, "|");
         hangerParts[1][1] = new HangerPart(false, "  ---"); // *3
-        hangerParts[1][2] = new HangerPart(false, "     |");     // *2
+        hangerParts[1][2] = new HangerPart(false, "     |");// *2
         hangerParts[1][3] = new HangerPart(false, "---");   // *4
 
         hangerParts[2][0] = new HangerPart(true, "|");
         hangerParts[2][1] = new HangerPart(false, "    /"); // *5
-        hangerParts[2][2] = new HangerPart(false, " \\");  // *6
+        hangerParts[2][2] = new HangerPart(false, " \\");   // *6
         // hangerParts[2][3] is null
 
         hangerParts[3][0] = new HangerPart(true, "|");
@@ -98,10 +94,10 @@ public class Hanger {
 
     public void incrementCurrentIndex() {
         this.orderOfParts[this.currentIndex].setVisible();
-        this.currentIndex++;
-        if(this.currentIndex == 1) {
-            
+        if(this.currentIndex == 2) {
+            this.orderOfParts[this.currentIndex-1].setString("|");
         }
+        this.currentIndex++;
     }
 
     // get the whole string

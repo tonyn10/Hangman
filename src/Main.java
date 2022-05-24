@@ -7,8 +7,9 @@ public class Main {
         System.out.println("Topic: " + manager.getTopic());
 
         WordTracker tracker = new WordTracker(word);
-        WinCondition winCondition = new WinCondition(word, tracker);
-        UserInterface ui = new UserInterface(word, winCondition, tracker);
+        Hanger hanger = new Hanger();
+        WinCondition winCondition = new WinCondition(word, tracker, hanger);
+        UserInterface ui = new UserInterface(word, winCondition, tracker, hanger);
 
         while(!winCondition.isGameEnd()) {
             ui.displayBoard();

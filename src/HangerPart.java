@@ -9,6 +9,10 @@ public class HangerPart {
         this.value = value;
     }
 
+    public void setString(String s) {
+        this.value = s;
+    }
+
     public void setVisible() {
         this.visible = true;
     }

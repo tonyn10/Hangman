@@ -6,13 +6,17 @@ public class WinCondition {
     private boolean interrupted;
     private WordTracker tracker;
 
-    public WinCondition(String word, WordTracker tracker) {
+    private Hanger hanger;
+
+    public WinCondition(String word, WordTracker tracker, Hanger hanger) {
         this.tracker = tracker;
         this.lives = 6;
 
         this.win = false;
         this.lose = false;
         this.interrupted = false;
+
+        this.hanger = hanger;
     }
 
     public void receiveInput(char c) {
@@ -23,6 +27,7 @@ public class WinCondition {
 
     private void decreaseLives() {
         this.lives--;
+        this.hanger.incrementCurrentIndex();
     }
 
     public void checkWinLoseCondition() {

@@ -10,10 +10,14 @@ public class UserInterface {
     private WinCondition winCondition;
     private Scanner sc;
 
-    public UserInterface(String word, WinCondition winCondition, WordTracker tracker) {
+    private Hanger hanger;
+
+    public UserInterface(String word, WinCondition winCondition, WordTracker tracker, Hanger hanger) {
         this.winCondition = winCondition;
         this.tracker = tracker;
         this.sc = new Scanner(System.in);
+
+        this.hanger = hanger;
     }
 
     public void askForLetter() {
@@ -79,9 +83,9 @@ public class UserInterface {
     }
 
     public void displayBoard() {
-        System.out.println("\n\n\n");   // provide line space from previousb board
+        System.out.println();   // provide line space from previous board
+        System.out.println(this.hanger.toString());
         this.displayCurrent();
-        this.displayLives();
     }
 
     public void displayResults() {
